@@ -8,9 +8,9 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     if User.find_by(email: params[:email]).nil?
-      parameters= { name: params[:name], lastname: params[:lastname], 
-      email: params[:email], password: params[:password], celphone: params[:celphone]}
-      user = User.new(parameters)
+      #parameters= { name: params[:name], lastname: params[:lastname], 
+      #email: params[:email], password: params[:password], celphone: params[:celphone]}
+      user = User.new(user_params)
       if user.save
         render json: user, status: :created
       else
