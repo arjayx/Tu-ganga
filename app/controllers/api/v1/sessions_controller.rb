@@ -17,6 +17,20 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def destroy
+    
+    authenticate_with_http_token do |token, options|
+      key = Token.find_by(key: token)
+      puts "Este es el token #{key}"
+      unless key.nil?
+        if key.destroy
+          render json: { message: "Logout successfull"}, status: :ok
+        else
+          render json: { message: "Problems in Logout", ststus:   :internal_server_error}
+        end
+      else
+        render json: {error: "Token no found"}, status: :not_found
+      end
+    end
   end
 
   private
