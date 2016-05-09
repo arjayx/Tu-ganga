@@ -23,6 +23,6 @@ class Token < ActiveRecord::Base
     begin
       self.key = SecureRandom.uuid.gsub(/-/, "")
     end while(Token.where(key: self.key).any?)
-    self.expires_at = 1.month.from_now   
+    self.expires_at ||= 1.month.from_now   
   end
 end

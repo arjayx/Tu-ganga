@@ -3,13 +3,12 @@ class Api::V1::UsersController < ApplicationController
   # Callbacks
   skip_before_action :responce_of_authentication, only: [:create]
   skip_before_action :verify_authenticity_token, only: [:create]
+
   def index
   end
 
   def create
     if User.find_by(email: params[:email]).nil?
-      #parameters= { name: params[:name], lastname: params[:lastname], 
-      #email: params[:email], password: params[:password], celphone: params[:celphone]}
       user = User.new(user_params)
       if user.save
         render json: user, status: :created
@@ -29,6 +28,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
+  # Strongs parameters
   def user_params
     params.require(:user).permit(:name, :lastname, :email, :password, :celphone)
   end

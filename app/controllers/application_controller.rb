@@ -3,17 +3,18 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  # Callbaks
   before_action :responce_of_authentication
 
   
   # Methods
   private
   def responce_of_authentication
-    check_authentication || render_unauthorized  
+    authentication_is_valid? || render_unauthorized  
   end
 
   # Verify if token excist return true or false
-  def check_authentication
+  def authentication_is_valid?
     authenticate_with_http_token do |token, options|
       Token.find_by(key: token)
     end
